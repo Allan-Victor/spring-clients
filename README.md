@@ -14,6 +14,8 @@ This repository is ideal for developers upgrading older Spring applications or l
 
 ## **📘 Project Overview**
 
+For a comprehensive, step-by-step tutorial on how to configure, inject, and use every client in your services, see the **[📖 Step-by-Step Client Usage Guide](CLIENT_USAGE_GUIDE.md)**.
+
 The goal of this project is to provide clear and practical examples of different Spring HTTP client approaches, including:
 
 * How to configure each client
@@ -21,7 +23,24 @@ The goal of this project is to provide clear and practical examples of different
 * How to handle headers, authentication, and error handling
 * How to determine when to use each approach in real-world applications
 
-Every client implementation calls the same sample API, making comparisons consistent and easy to understand.
+Every client implementation calls the same sample API ([JSONPlaceholder](https://jsonplaceholder.typicode.com)), making comparisons consistent and easy to understand.
+
+---
+
+## **🗺️ Client-to-File Quick Reference**
+
+Developers cloning this repository can directly find each client demonstration in the following files:
+
+| Spring HTTP Client | File Location | Key Technologies / Annotations | Description & Paradigm |
+| :--- | :--- | :--- | :--- |
+| **HTTP Interfaces (Sync)** | [`src/main/java/com/allan/spring_clients/album/AlbumClient.java`](src/main/java/com/allan/spring_clients/album/AlbumClient.java) | `@HttpExchange`, `@GetExchange`, `@ImportHttpServices` | Declarative synchronous proxy client (Zero boilerplate, Spring 6+ / Boot 4) |
+| **HTTP Interfaces (Async Reactive)** | [`src/main/java/com/allan/spring_clients/album/AsyncAlbumClient.java`](src/main/java/com/allan/spring_clients/album/AsyncAlbumClient.java) | `@HttpExchange`, `@GetExchange`, `WebClientAdapter`, `Flux`, `Mono` | Declarative reactive asynchronous proxy client (Non-blocking, Spring WebFlux) |
+| **HTTP Interfaces (Async CompletableFuture)** | [`src/main/java/com/allan/spring_clients/album/CompletableFutureAlbumClient.java`](src/main/java/com/allan/spring_clients/album/CompletableFutureAlbumClient.java) | `@HttpExchange`, `@GetExchange`, `CompletableFuture` | Declarative Java Promise asynchronous proxy client (Standard Java Concurrency) |
+| **Server-Sent Events (SSE) Client** | [`src/main/java/com/allan/spring_clients/sse/SseClient.java`](src/main/java/com/allan/spring_clients/sse/SseClient.java) | `WebClient`, `ServerSentEvent`, `text/event-stream` | Real-time unidirectional streaming client (How-To guide & SSE consumer) |
+| **RestClient** | [`src/main/java/com/allan/spring_clients/post/PostClient.java`](src/main/java/com/allan/spring_clients/post/PostClient.java) | `RestClient`, `ParameterizedTypeReference` | Modern synchronous fluent client (Spring Framework 6.1 / Spring Boot 3.2+) |
+| **RestTemplate** | [`src/main/java/com/allan/spring_clients/todo/TodoClient.java`](src/main/java/com/allan/spring_clients/todo/TodoClient.java) | `RestTemplate`, `RestTemplateBuilder`, `exchange()` | Classic synchronous template client (Spring 3.0+ legacy / maintenance mode) |
+| **WebClient** | [`src/main/java/com/allan/spring_clients/user/UserClient.java`](src/main/java/com/allan/spring_clients/user/UserClient.java) | `WebClient`, `Mono`, `Flux` | Reactive asynchronous non-blocking client (Spring WebFlux / Project Reactor) |
+| **Client Configuration** | [`src/main/java/com/allan/spring_clients/config/ClientConfig.java`](src/main/java/com/allan/spring_clients/config/ClientConfig.java) | `@Configuration`, `WebClient.Builder`, `RestClient.Builder` | Central bean definitions and adapter setups |
 
 ---
 
@@ -57,7 +76,13 @@ Every client implementation calls the same sample API, making comparisons consis
 * `@GetExchange`, `@PostExchange`, etc.
 * Automatic proxy generation
 * Clean, type-safe, minimal boilerplate
-* Configurable with custom converters, authentication, filters
+* Configurable execution models: Synchronous (`AlbumClient`), Reactive (`AsyncAlbumClient`), or Promise-based (`CompletableFutureAlbumClient`)
+
+### **5. Server-Sent Events (SSE) Client & How-To Guide**
+
+* Consuming real-time unidirectional streams (`text/event-stream`)
+* Raw text streaming, JSON deserialization, and full `ServerSentEvent<T>` metadata (IDs, event types, retry intervals)
+* Step-by-step How-To and producer controller demonstration (`SseDemoController`)
 
 ---
 
